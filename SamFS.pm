@@ -402,7 +402,7 @@ require AutoLoader;
                              )],
                              );
 
-$VERSION = '0.033';
+$VERSION = '0.035';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()

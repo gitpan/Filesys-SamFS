@@ -1,4 +1,7 @@
 Revision history for Perl extension Filesys::SamFS.
+    * 0.035 Wed May 29 11:11:34 2002
+        Moved website to www.lpue-christoph.de (Yay!)
+
     * 0.034 Mon Jun 25 14:26:08 2001
         Added missing functions to export lists: sam_archive sam_cancelstage
         sam_release sam_ssum sam_stage sam_setfa sam_advise

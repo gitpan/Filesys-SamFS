@@ -1,6 +1,5 @@
 Filesys::SamFS
   Description
-
     Filesys::SamFS makes the SamFS API available to Perl. SamFS is a HSM
     (Hierarchical Storage Management) Filesystem; it manages files in two
     storage levels - a cache on disks and an archive on removable media like
@@ -10,29 +9,24 @@ Filesys::SamFS
     http://www.lsci.com/ .
 
   Copying
-
     Copyright (c) 2000,2001 Lupe Christoph. All rights reserved.
 
   License
-
     This software is covered by Perl's Artistic license, see the file
     Artistic included in the distribution.
 
   Download
-
         You can download Filesys::SamFS from CPAN and from my website at
-        http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS-0.02.tar.gz .
+        http://www.lupe-christoph.de/Personal/Perl/Filesys-SamFS/
 
   Prerequisites
-
     perl 5.005_03  While it is quite possible that this module will work
                    with earlier versions, it has only been tested with this
                    version.
 
-    SamFS          Tested with versions 3.3.0-40 and 3.3.1-15.
+    SamFS          Tested with versions 3.3.0-40, 3.3.1-15, and 3.5.0-28.
 
   Build/Installation
-
     Standard build/installation supported by ExtUtils::MakeMaker(3)...
 
             perl Makefile.PL
@@ -47,11 +41,9 @@ Filesys::SamFS
             su root -c '/usr/ccs/bin/make test'
 
   Author
-
         Lupe Christoph <lupe@lupe-christoph.de>
 
   Webpage
-
         Filesys::SamFS has it's own webpage at
-        http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS/ .
+        http://www.lupe-christoph.de/Personal/Perl/Filesys-SamFS/ .
 

@@ -2,6 +2,13 @@
 
 =over
 
+=item * 0.035  Wed May 29 11:11:34 2002
+
+Moved website to www.lpue-christoph.de (Yay!)
+
+=for html
+<P></P>
+
 =item * 0.034  Mon Jun 25 14:26:08 2001
 
 Added missing functions to export lists:
@@ -9,7 +16,6 @@ Added missing functions to export lists:
 
 =for html
 <P></P>
-=over
 
 =item * 0.033  Mon Apr 23 19:32:06 2001
 
@@ -20,7 +26,6 @@ Added file Artistic to the distribution.
 
 =for html
 <P></P>
-=over
 
 =item * 0.032  Wed Apr 11 11:19:51 2001
 
