@@ -33,7 +33,7 @@ You can download Filesys::SamFS from <A HREF="http://www.cpan.org/">CPAN</A> and
 
 =over 15
 
-=item perl 5.003_05
+=item perl 5.005_03
 
 While it is quite possible that this module will work with earlier
 versions, it has only been tested with this version.

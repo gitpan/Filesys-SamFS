@@ -1,22 +1,26 @@
 Revision history for Perl extension Filesys::SamFS.
-    * 0.031  Tue Mar  7 09:56:58 2000
+    * 0.032 Wed Apr 11 11:19:51 2001
+        Corrected minor mistake in examples/sls. Corrected documentation for
+        vsn_stat - it requires two arguments.
+
+    * 0.031 Tue Mar 7 09:56:58 2000
         Changed name of the SamFS version sub from VERSION (clashes with the
         module VERSION) to SAM_VERSION. Added opencat, closecat, and
         getcatalog to the documentation, which was also a little beautified.
 
-    * 0.03  Thu Feb 24 20:34:35 2000
+    * 0.03 Thu Feb 24 20:34:35 2000
         Support for SamFS release 3.3.1. Added SS_ARCHIVE_C, SS_DIRECTIO,
         SS_PARTIAL, SS_ISARCHIVE_C, SS_ISDIRECTIO, SS_ISPARTIAL (only
         defined when Filesys::SamFS is installed with a SamFS version that
         has them). Changed implementation of sam_vsn_stat().
 
-    * 0.021  Wed Feb 23 10:46:00 2000
+    * 0.021 Wed Feb 23 10:46:00 2000
         Converted README and Changes to POD format. Changed Makefile.PL to
         generate text and HTML versions from them.
 
-    * 0.02  Tue Feb 22 14:40:30 2000
+    * 0.02 Tue Feb 22 14:40:30 2000
         Reworked tests, Makefile.PL, added examples/sls
 
-    * 0.01  Fri Feb 11 16:20:49 2000
+    * 0.01 Fri Feb 11 16:20:49 2000
         original version; created by h2xs 1.19
 

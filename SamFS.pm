@@ -384,7 +384,7 @@ require AutoLoader;
                              )],
                              );
 
-$VERSION = '0.031';
+$VERSION = '0.032';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -765,12 +765,12 @@ just do not provide these elements.)
 
 =head2 vsn_stat
 
-B<Filesys::SamFS::vsn_stat($path)> (importable as sam_vsn_stat)
+B<Filesys::SamFS::vsn_stat($path, $copy)> (importable as sam_vsn_stat)
 returns a list of MAX_VSNS array references.
 Each array referenced contains the elements vsn, length, position and offset.
 All of them are strings.
 
-B<Filesys::SamFS::vsn_stat($path)> returns an empty list on error.
+B<Filesys::SamFS::vsn_stat($path, $copy)> returns an empty list on error.
 $! is set in this case.
 
 =head2 attrtoa
