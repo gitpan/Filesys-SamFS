@@ -1,20 +1,20 @@
 Filesys::SamFS
   Description
 
-    Filesys::SamFS makes the SamFS API available to Perl. SamFS is a HSM
-    (Hierarchical Storage Management) Filesystem; it manages files in two
-    storage levels - a cache on disks and an archive on removable media like
-    magneto-optical disks or tapes.
+    Filesys::SamFS makes the SamFS API available to Perl. SamFS is a
+    HSM (Hierarchical Storage Management) Filesystem; it manages
+    files in two storage levels - a cache on disks and an archive on
+    removable media like magneto-optical disks or tapes.
 
-    SamFS is a product of LSC, Inc. For more information, please refer to
-    http://www.lsci.com/ .
+    SamFS is a product of LSC, Inc. For more information, please
+    refer to http://www.lsci.com/ .
 
   Copying
 
     Copyright (c) 2000 Lupe Christoph. All rights reserved.
 
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+    This program is free software; you can redistribute it and/or
+    modify it under the same terms as Perl itself.
 
   Download
 
@@ -23,24 +23,25 @@ Filesys::SamFS
 
   Prerequisites
 
-    perl 5.003_05  While it is quite possible that this module will work with
-                   earlier versions, it has only been tested with this
-                   version.
+    perl 5.003_05  While it is quite possible that this module will work
+                   with earlier versions, it has only been tested
+                   with this version.
 
-    SamFS          Tested with version 3.3.0-40.
+    SamFS          Tested with versions 3.3.0-40 and 3.3.1-15.
 
   Build/Installation
 
-    Standard build/installation supported by ExtUtils::MakeMaker(3)...
+    Standard build/installation supported by
+    ExtUtils::MakeMaker(3)...
 
             perl Makefile.PL
             make
             make test
             make install
 
-    Note that the ndevstat() call in the API only works for the superuser.
-    Consequently, t/03ndevstat.t will fail unless it is run by root. You can
-    do this with this command:
+    Note that the ndevstat() call in the API only works for the
+    superuser. Consequently, t/03ndevstat.t will fail unless it is
+    run by root. You can do this with this command:
 
             su root -c '/usr/ccs/bin/make test'
 
@@ -51,5 +52,5 @@ Filesys::SamFS
   Webpage
 
     Filesys::SamFS has it's own webpage at
-    http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS.shtml .
+    http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS/ .
 

@@ -43,7 +43,7 @@ versions, it has only been tested with this version.
 
 =item SamFS
 
-Tested with version 3.3.0-40.
+Tested with versions 3.3.0-40 and 3.3.1-15.
 
 =back
 
@@ -76,12 +76,12 @@ You can do this with this command:
 =head2 Webpage
 
 =for html
-Filesys::SamFS has it's own <A HREF="http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS.shtml">webpage</A>.
+Filesys::SamFS has it's own <A HREF="http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS/">webpage</A>.
 
 =begin text
 
     Filesys::SamFS has it's own webpage at
-    http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS.shtml .
+    http://free.prohosting.com/~lupe/Personal/Perl/Filesys-SamFS/ .
 
 =end text
 

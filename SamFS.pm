@@ -12,7 +12,7 @@ require AutoLoader;
 
 @EXPORT_OK = (
 # Version defines
-	'VERSION',
+	'SAM_VERSION',
 	'NAME',
 	'MAJORV',
 	'MINORV',
@@ -83,6 +83,13 @@ require AutoLoader;
 	'SS_ISCSGEN',
 	'SS_ISCSUSE',
 	'SS_ISCSVAL',
+# New in 3.3.1
+	'SS_ARCHIVE_C',
+        'SS_DIRECTIO',
+        'SS_PARTIAL',
+	'SS_ISARCHIVE_C',
+        'SS_ISDIRECTIO',
+        'SS_ISPARTIAL',
 
 # flag macros
 	'SS_STAGEFAIL',
@@ -193,7 +200,7 @@ require AutoLoader;
 );
 
 %EXPORT_TAGS = (version => [ qw(
-                             VERSION
+                             SAM_VERSION
                              NAME
                              MAJORV
                              MINORV
@@ -264,7 +271,13 @@ require AutoLoader;
                              SS_ISCSGEN
                              SS_ISCSUSE
                              SS_ISCSVAL
-                             )],
+                             SS_ARCHIVE_C
+                             SS_DIRECTIO
+                             SS_PARTIAL
+                             SS_ISARCHIVE_C
+                             SS_ISDIRECTIO
+                             SS_ISPARTIAL
+                            )],
 	        flags => [ qw(
                              SS_STAGEFAIL
                              SS_STAGING
@@ -370,7 +383,8 @@ require AutoLoader;
                              CS_WRTPROT
                              )],
                              );
-$VERSION = '0.021';
+
+$VERSION = '0.031';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -494,7 +508,7 @@ refer to http://www.lsci.com/ .
 
 Filesys::SamFS does not export by default.
 All constants and functions are available for explicit import
-(i.e. use "Filesys::SamFS (VERSION)").
+(i.e. use "Filesys::SamFS (SAM_VERSION)").
 They have also been bundled up in useful groups for import with tags
 (i.e. use "Filesys::SamFS (:version)").
 
@@ -504,11 +518,14 @@ The groups are the following:
 
 =item :version
 
-VERSION
+SAM_VERSION
 NAME
 MAJORV
 MINORV
 FIXV
+
+Note that VERSION is the I<module> version; the SamFS version is available
+as C<Filesys::SamFS::SAM_VERSION>.
 
 =item :stat
 
@@ -577,6 +594,12 @@ SS_ISSTAGE_N(attr)
 SS_ISCSGEN(attr)
 SS_ISCSUSE(attr)
 SS_ISCSVAL(attr)
+SS_ARCHIVE_C,
+SS_DIRECTIO,
+SS_PARTIAL,
+SS_ISARCHIVE_C,
+SS_ISDIRECTIO,
+SS_ISPARTIAL,
 
 =item :flags
 
@@ -690,7 +713,12 @@ CS_WRTPROT(status)
 
 =head1 Interface
 
-=head2 stat
+The following paragraphs describe the interface from the Perl viewpoint
+and emphasize differences from the C API.
+For a description of the commonalities, please refer to thge
+SamFS API manpages.
+
+=head2 stat and lstat
 
 B<Filesys::SamFS::stat($path)> (importable as sam_stat) returns a list, much like
 the standard Perl function stat.
@@ -735,6 +763,8 @@ but blksize and blocks are still returned as B<undef>.
 (This is so because the SamFS API function sam_stat()/sam_lstat()
 just do not provide these elements.)
 
+=head2 vsn_stat
+
 B<Filesys::SamFS::vsn_stat($path)> (importable as sam_vsn_stat)
 returns a list of MAX_VSNS array references.
 Each array referenced contains the elements vsn, length, position and offset.
@@ -743,21 +773,53 @@ All of them are strings.
 B<Filesys::SamFS::vsn_stat($path)> returns an empty list on error.
 $! is set in this case.
 
+=head2 attrtoa
+
 B<Filesys::SamFS::attrtoa($attr)> (importable as sam_attrtoa)
 translates a numeric attribute word into a symbolic string,
 which is returned.
+
+=head2 devstat
 
 B<Filesys::SamFS::devstat($eq)> (importable as sam_devstat)
 and B<Filesys::SamFS::ndevstat($eq)> (importable as sam_ndevstat)
 both return a list of values or no values at all in the case
 of an error.
 
-($type, $name, $vsn, $state, $status, $space, $capacity) = Filesys::SamFS::ndevstat($eq);
+C<($type, $name, $vsn, $state, $status, $space, $capacity) = Filesys::SamFS::ndevstat($eq);>
 
-B<Filesys::SamFS::devstr($status)> ((importable as sam_devstr)
+=head2 devstr
+
+B<Filesys::SamFS::devstr($status)> (importable as sam_devstr)
 can be used to translate the binary status value into a string.
 This string is returned.
 
+=head2 Catalog
+
+B<Filesys::SamFS::opencat($path)> (importable as sam_opencat)
+opens a SamFS robot catalog. If this operation succeeds, it
+returns a list C<($cat_handle, $audit_time, $vcersion, $count, $media)>.
+C<$cat_handle> identifies the opened catalog and must be passed to
+C<closecat> and C<getcatalog>.
+For the other elements of the list please refer to the sam_opencat
+manpage.
+If the opening of the catalog fails, an empty list is returned
+and C>$!> is set.
+
+B<Filesys::SamFS::closecat($cat_handle)> (importable as sam_closecat)
+closes the catalog opened with C<opencat>, as identified by the handle.
+It returns 0 on success. On failure, it returns -1 and sets C<$!>.
+
+B<Filesys::SamFS::getcatalog($cat_handle, $slot)> (importable as sam_getcat)
+queries the catalog identified by the handle for a single slot.
+Note that the SamFS API funtion sam_getcatalog() can query several slots;
+we try to keep the interface simple by not returning a list of lists.
+The list returned has the elements
+C<($type, $status, $media, $vsn, $access, $capacity, $space, $ptoc_fwa,
+$modification_time, $mount_time, $bar_code)>.
+getcatalog returns an empty list on failure and sets C<$!>.
+
+=head2 Attributes
 B<sam_archive($path, $opns)> (importable as sam_archive)
 sets archive attributes on the file or directory pointed to by $path.
 Please refer to sam_archive(3) for details.

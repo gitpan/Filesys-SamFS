@@ -3,7 +3,12 @@
 #include "XSUB.h"
 
 #include <catalog.h>
+
+/* Avoid clash with library. */
+extern char *dev_state[];
+#define DEV_NM_HERE
 #include <devstat.h>
+
 #include <stat.h>
 #include <ustat.h>
 #include <rminfo.h>
@@ -543,6 +548,13 @@ constant(char *name, int arg)
 #else
 	    goto not_there;
 #endif
+	/* SamFS 3.3.1 */
+	if (strEQ(name, "SS_ARCHIVE_C"))
+#ifdef SS_ARCHIVE_C
+	    return SS_ARCHIVE_C;
+#else
+	    goto not_there;
+#endif
 	if (strEQ(name, "SS_ARCHIVE_N"))
 #ifdef SS_ARCHIVE_N
 	    return SS_ARCHIVE_N;
@@ -579,9 +591,23 @@ constant(char *name, int arg)
 #else
 	    goto not_there;
 #endif
+	/* SamFS 3.3.1 */
+	if (strEQ(name, "SS_DIRECTIO"))
+#ifdef SS_DIRECTIO
+	    return SS_DIRECTIO;
+#else
+	    goto not_there;
+#endif
 	if (strEQ(name, "SS_OFFLINE"))
 #ifdef SS_OFFLINE
 	    return SS_OFFLINE;
+#else
+	    goto not_there;
+#endif
+	/* SamFS 3.3.1 */
+	if (strEQ(name, "SS_PARTIAL"))
+#ifdef SS_PARTIAL
+	    return SS_PARTIAL;
 #else
 	    goto not_there;
 #endif
@@ -782,7 +808,7 @@ OUTPUT:
 	RETVAL
 
 char *
-sam_VERSION()
+sam_SAM_VERSION()
 CODE:
 	RETVAL = SAM_VERSION;
 OUTPUT:
@@ -900,6 +926,19 @@ CODE:
 OUTPUT:
 	RETVAL
 
+# SamFS 3.3.1
+#ifdef SS_PARTIAL
+
+int
+sam_SS_ISPARTIAL(attr)
+	int attr;
+CODE:
+	RETVAL = (attr & SS_PARTIAL) != 0;
+OUTPUT:
+	RETVAL
+
+#endif
+
 int
 sam_SS_ISARCHIVE_N(attr)
 	int attr;
@@ -923,6 +962,19 @@ CODE:
 	RETVAL = (attr & SS_ARCHIVE_R) != 0;
 OUTPUT:
 	RETVAL
+
+# SamFS 3.3.1
+#ifdef SS_ARCHIVE_C
+
+int
+sam_SS_ISARCHIVE_C(attr)
+	int attr;
+CODE:
+	RETVAL = (attr & SS_ARCHIVE_C) != 0;
+OUTPUT:
+	RETVAL
+
+#endif
 
 int
 sam_SS_ISRELEASE_A(attr)
@@ -1003,6 +1055,19 @@ CODE:
 	RETVAL = (flags & SS_STAGEFAIL) != 0;
 OUTPUT:
 	RETVAL
+
+# SamFS 3.3.1
+#ifdef SS_DIRECTIO
+
+int
+sam_SS_ISDIRECTIO(flags)
+	int flags;
+CODE:
+	RETVAL = (flags & SS_DIRECTIO) != 0;
+OUTPUT:
+	RETVAL
+
+#endif
 
 int
 sam_CS_NEEDS_AUDIT(status)
@@ -1197,11 +1262,21 @@ sam_vsn_stat(path, copy)
 	char *	path
 	int	copy
 PREINIT:
+#ifndef MAX_VSNS
+/* Make SamFS 3.3.1-15 backwards compatible */
+#define MAX_VSNS MAX_VOLUMES
+	struct sam_vsn_stat {
+		struct sam_section section[MAX_VOLUMES];
+	};
+#define CAST (struct sam_section*)
+#else
+#define CAST
+#endif
 	struct sam_vsn_stat statbuf;
 	int retval;
 	int i;
 PPCODE:
-	retval = sam_vsn_stat(path, copy, &statbuf, sizeof statbuf);
+	retval = sam_vsn_stat(path, copy, CAST &statbuf, sizeof statbuf);
 	if (retval == 0) {
 		EXTEND(SP, MAX_VSNS);
 		for (i=0; i<MAX_VSNS; i++) {
