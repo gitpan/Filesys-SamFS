@@ -1,0 +1,24 @@
+=head1 Revision history for Perl extension Filesys::SamFS.
+
+=over
+
+=item * 0.021  Wed Feb 23 10:46:00 2000
+
+Converted README and Changes to POD format.
+Changed Makefile.PL to generate text and HTML versions from them.
+
+=for html
+<P></P>
+
+=item * 0.02  Tue Feb 22 14:40:30 2000
+
+Reworked tests, Makefile.PL, added examples/sls
+
+=for html
+<P></P>
+
+=item * 0.01  Fri Feb 11 16:20:49 2000
+
+original version; created by h2xs 1.19
+
+=back
