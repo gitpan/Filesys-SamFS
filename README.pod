@@ -12,10 +12,12 @@ refer to http://www.lsci.com/ .
 
 =head2 Copying
 
-Copyright (c) 2000 Lupe Christoph. All rights reserved.
+Copyright (c) 2000,2001 Lupe Christoph. All rights reserved.
 
-This program is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+=head2 License
+
+This software is covered by Perl's Artistic license, see the
+file Artistic included in the distribution.
 
 =head2 Download
 

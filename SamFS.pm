@@ -195,6 +195,15 @@ require AutoLoader;
 	'CS_UNAVAIL',
 	'CS_WRTPROT',
 
+# Misacellaneous operations
+	'sam_archive',
+	'sam_cancelstage',
+	'sam_release',
+	'sam_ssum',
+	'sam_stage',
+	'sam_setfa',
+	'sam_advise',
+
 # Not yet
 	'RI_blockio',
 );
@@ -382,9 +391,18 @@ require AutoLoader;
                              CS_UNAVAIL
                              CS_WRTPROT
                              )],
+	        operations => [ qw(
+                             sam_archive 
+                             sam_cancelstage
+                             sam_release 
+                             sam_ssum
+                             sam_stage 
+                             sam_setfa
+                             sam_advise
+                             )],
                              );
 
-$VERSION = '0.032';
+$VERSION = '0.033';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -708,6 +726,16 @@ CS_RDONLY(status)
 CS_RECYCLE(status)
 CS_UNAVAIL(status)
 CS_WRTPROT(status)
+
+=item :operations
+
+sam_archive 
+sam_cancelstage
+sam_release 
+sam_ssum
+sam_stage 
+sam_setfa
+sam_advise
 
 =back
 

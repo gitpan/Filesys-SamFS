@@ -1,4 +1,13 @@
 Revision history for Perl extension Filesys::SamFS.
+    * 0.034 Mon Jun 25 14:26:08 2001
+        Added missing functions to export lists: sam_archive sam_cancelstage
+        sam_release sam_ssum sam_stage sam_setfa sam_advise
+
+    * 0.033 Mon Apr 23 19:32:06 2001
+        Removed license statement ("same as Perl") from Copyright section in
+        README.pod. Added License section to README.pod. Added file Artistic
+        to the distribution.
+
     * 0.032 Wed Apr 11 11:19:51 2001
         Corrected minor mistake in examples/sls. Corrected documentation for
         vsn_stat - it requires two arguments.
