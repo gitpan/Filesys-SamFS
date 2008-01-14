@@ -29,7 +29,7 @@ installation when you do the 'make install'.
 
 EOF
 
-$SamFS_dir = '/opt/LSCsamfs';
+$SamFS_dir = '/opt/SUNWsamfs';
 
 do {{
   print "Where is SamFS located [$SamFS_dir]: ";
@@ -134,10 +134,16 @@ seek(DATA, 0, 0);
 print ARCHIVED <DATA>;
 close(ARCHIVED);
 
+# Early versions of SamFS omitted the definition of sam_devstr from
+# lib.h. Find out if it is defined in *this* version. We do this
+# dynamically to avoid pinpointing the version that introduced teh
+# definition.
+
 WriteMakefile(
 	      'NAME'	     => 'Filesys::SamFS',
 	      'VERSION_FROM' => 'SamFS.pm',
-	      'LIBS'	     => ["-L$SamFS_dir/lib -lsam"],
+              'DEFINE'       => "@ARGV",
+	      'LIBS'	     => ["-R$SamFS_dir/lib -L$SamFS_dir/lib -lsam"],
 	      'INC'	     => "-I$SamFS_dir/include",
 	      'PM'           => {'SamFS.pm' => '$(INST_LIBDIR)/SamFS.pm'},
 	      'MAN3PODS'     => {'SamFS.pm' => '$(INST_MAN3DIR)/Filesys::SamFS.$(MAN3EXT)'},

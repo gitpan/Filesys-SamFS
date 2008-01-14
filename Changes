@@ -1,6 +1,25 @@
 Revision history for Perl extension Filesys::SamFS.
+    * 0.1 2008-01-14 13:21
+        Regenerated code for constants with recent h2xs to make it more
+        efficient. All new constants in supports include files added. Added
+        new macros as well. sam_stat now returns the number of blocks and a
+        constant blocksize of 512.
+
+        New versions of stat and lstat: stat_sclars and lstat_scalars. They
+        return an array ref pointing to the copy arrays rather than the
+        arrays themselves, plus the new members of the structure. Code
+        wrapping sam_vsn_stat, sam_segment_vsn_stat, sam_segment_stat,
+        sam_segment_lstat, sam_restore_file, sam_restore_copy Much of the
+        new code can be switched off by defining OLD_SAMFS.
+
+        NOTE: The behaviour of sam_vsn_stat has been changed. Unless
+        compiled with OLD_SAMFS, it returns a reference to one array that
+        contains the attributes of the requested copy rather than a list of
+        arrays, where the first array contains the attributes. I.e. the
+        other arrays have been dropped.
+
     * 0.035 Wed May 29 11:11:34 2002
-        Moved website to www.lpue-christoph.de (Yay!)
+        Moved website to www.lupe-christoph.de (Yay!)
 
     * 0.034 Mon Jun 25 14:26:08 2001
         Added missing functions to export lists: sam_archive sam_cancelstage

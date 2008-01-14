@@ -5,11 +5,13 @@ Filesys::SamFS
     storage levels - a cache on disks and an archive on removable media like
     magneto-optical disks or tapes.
 
-    SamFS is a product of LSC, Inc. For more information, please refer to
-    http://www.lsci.com/ .
+    SamFS is a product of Sun Microsystems, Inc. For more information,
+    please refer to
+
+          http://www.sun.com/storagetek/management_software/data_management/sam/
 
   Copying
-    Copyright (c) 2000,2001 Lupe Christoph. All rights reserved.
+    Copyright (c) 2000,2001,2008 Lupe Christoph. All rights reserved.
 
   License
     This software is covered by Perl's Artistic license, see the file
@@ -25,6 +27,15 @@ Filesys::SamFS
                    version.
 
     SamFS          Tested with versions 3.3.0-40, 3.3.1-15, and 3.5.0-28.
+                   NOT TESTED WITH 4.x by the author!
+
+  NOTE
+    The author does not have access to a SamFS installation anymore. It is
+    thus vitally important for him to receive YOUR feedback about any if
+    small problem you encounter.
+
+    Because it is very hard to develop test code without the ability to test
+    it, additional test code written by YOU is very welcome.
 
   Build/Installation
     Standard build/installation supported by ExtUtils::MakeMaker(3)...
@@ -33,6 +44,11 @@ Filesys::SamFS
             make
             make test
             make install
+
+    If you run into problems because you older SamFS does not define some of
+    the new feature, try running
+
+            perl Makefile.PL -DOLD_SAMFS
 
     Note that the ndevstat() call in the API only works for the superuser.
     Consequently, t/03ndevstat.t will fail unless it is run by root. You can
@@ -44,6 +60,6 @@ Filesys::SamFS
         Lupe Christoph <lupe@lupe-christoph.de>
 
   Webpage
-        Filesys::SamFS has it's own webpage at
+        Filesys::SamFS has its own webpage at
         http://www.lupe-christoph.de/Personal/Perl/Filesys-SamFS/ .
 

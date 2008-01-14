@@ -17,12 +17,21 @@ require AutoLoader;
 	'MAJORV',
 	'MINORV',
 	'FIXV',
+	'SAM_BUILD_INFO',
+	'SAM_BUILD_UNAME',
 
 # stat functions and associated constants
 	'sam_stat',
+        'sam_stat_scalars',
 	'sam_lstat',
+        'sam_lstat_scalars',
 	'sam_attrtoa',
 	'sam_vsn_stat',
+	'sam_segment_vsn_stat',
+	'sam_segment_stat',
+	'sam_segment_lstat',
+	'sam_restore_file',
+	'sam_restore_copy',
 	'MAX_ARCHIVE',
 	'MAX_VSNS',
 
@@ -47,6 +56,8 @@ require AutoLoader;
 	'S_ISREG',
 	'S_ISUID',
 	'S_ISLNK',
+# New in 0.1
+	'S_ISSOCK',
 
 # attr macros
 	'SS_SAMFS',
@@ -90,6 +101,32 @@ require AutoLoader;
 	'SS_ISARCHIVE_C',
         'SS_ISDIRECTIO',
         'SS_ISPARTIAL',
+# New in 0.1
+	'SS_DATA_V',
+	'SS_AIO',
+	'SS_SEGMENT_A',
+	'SS_ARCHIVE_I',
+	'SS_WORM',
+	'SS_READONLY',
+	'SS_SEGMENT_S',
+	'SS_SEGMENT_F',
+	'SS_SETFA_S',
+	'SS_SETFA_G',
+	'SS_DFACL',
+	'SS_ACL',
+	'SS_ISARCHIVE_I',
+	'SS_ISSEGMENT_A',
+	'SS_ISSEGMENT_S',
+	'SS_ISSEGMENT_F',
+#	'SS_ISSTAGE_M', SS_STAGE_M is missing
+	'SS_ISWORM',
+	'SS_ISREADONLY',
+	'SS_ISSETFA_G',
+	'SS_ISSETFA_S',
+	'SS_ISDFACL',
+	'SS_ISACL',
+	'SS_ISDATAV',
+	'SS_ISAIO',
 
 # flag macros
 	'SS_STAGEFAIL',
@@ -136,6 +173,84 @@ require AutoLoader;
 	'DT_VIDEO_TAPE',
 	'DT_WORM_OPTICAL',
 	'DT_WORM_OPTICAL_12',
+# new DT_* in 0.1
+	'DT_STRIPE_GROUP_MASK',
+	'DT_STRIPE_GROUP',
+	'DT_STK5800',
+	'DT_9490',
+	'DT_D3',
+	'DT_xx',
+	'DT_3590',
+	'DT_3570',
+	'DT_SONYDTF',
+	'DT_SONYAIT',
+	'DT_9840',
+	'DT_FUJITSU_128',
+	'DT_EXABYTE_M2_TAPE',
+	'DT_9940',
+	'DT_IBM3580',
+	'DT_SONYSAIT',
+	'DT_3592',
+	'DT_TITAN',
+	'DT_PLASMON_UDO',
+	'DT_LMS4500',
+	'DT_CYGNET',
+	'DT_DOCSTOR',
+	'DT_HPLIBS',
+	'DT_PLASMON_D',
+	'DT_PLASMON_G',
+	'DT_DLT2700',
+	'DT_METRUM_LIB',
+	'DT_METD28',
+	'DT_METD360',
+	'DT_ACL_LIB',
+	'DT_ACL452',
+	'DT_ACL2640',
+	'DT_EXB210',
+	'DT_ADIC448',
+	'DT_SPECLOG',
+	'DT_STK97XX',
+	'DT_UNUSED1',
+	'DT_3570C',
+	'DT_SONYDMS',
+	'DT_SONYCSM',
+	'DT_UNUSED2',
+	'DT_ATLP3000',
+	'DT_ADIC1000',
+	'DT_EXBX80',
+	'DT_STKLXX',
+	'DT_IBM3584',
+	'DT_ADIC100',
+	'DT_UNUSED3',
+	'DT_HP_C7200',
+	'DT_QUAL82xx',
+	'DT_ATL1500',
+	'DT_ODI_NEO',
+	'DT_QUANTUMC4',
+	'DT_GRAUACI',
+	'DT_STKAPI',
+	'DT_IBMATL',
+	'DT_LMF',
+	'DT_SONYPSC',
+	'DT_PSEUDO',
+	'DT_PSEUDO_SSI',
+	'DT_PSEUDO_SC',
+	'DT_PSEUDO_SS',
+	'DT_PSEUDO_RD',
+	'DT_HISTORIAN',
+	'DT_THIRD_PARTY',
+	'DT_THIRD_MASK',
+	'DT_UNKNOWN',
+	'is_disk',
+	'is_optical',
+	'is_robot',
+	'is_tape',
+	'is_tapelib',
+	'is_third_party',
+	'is_stripe_group',
+	'is_rsd',
+	'is_stk5800',
+
 	'DVST_ATTENTION',
 	'DVST_AUDIT',
 	'DVST_BAD_MEDIA',
@@ -195,7 +310,7 @@ require AutoLoader;
 	'CS_UNAVAIL',
 	'CS_WRTPROT',
 
-# Misacellaneous operations
+# Miscellaneous operations
 	'sam_archive',
 	'sam_cancelstage',
 	'sam_release',
@@ -214,12 +329,21 @@ require AutoLoader;
                              MAJORV
                              MINORV
                              FIXV
+                             SAM_BUILD_INFO
+                             SAM_BUILD_UNAME
                              ) ],
 		stat => [ qw(
                              sam_stat
+                             sam_stat_scalars
                              sam_lstat
+                             sam_lstat_scalars
                              sam_attrtoa
-                             vsn_stat
+                             sam_vsn_stat
+                             sam_segment_vsn_stat
+                             sam_segment_stat
+                             sam_segment_lstat
+                             sam_restore_file
+                             sam_restore_copy
                              MAX_ARCHIVE
                              MAX_VSNS
                              ) ],
@@ -244,6 +368,7 @@ require AutoLoader;
                              S_ISREG
                              S_ISUID
                              S_ISLNK
+                             S_ISSOCK
                              ) ],
 		attr => [ qw(
                              SS_SAMFS
@@ -286,7 +411,32 @@ require AutoLoader;
                              SS_ISARCHIVE_C
                              SS_ISDIRECTIO
                              SS_ISPARTIAL
+                             SS_DATA_V
+                             SS_AIO
+                             SS_SEGMENT_A
+                             SS_ARCHIVE_I
+                             SS_WORM
+                             SS_READONLY
+                             SS_SEGMENT_S
+                             SS_SEGMENT_F
+                             SS_SETFA_S
+                             SS_SETFA_G
+                             SS_DFACL
+                             SS_ACL
+                             SS_ISARCHIVE_I
+                             SS_ISSEGMENT_A
+                             SS_ISSEGMENT_S
+                             SS_ISSEGMENT_F
+                             SS_ISWORM
+                             SS_ISREADONLY
+                             SS_ISSETFA_G
+                             SS_ISSETFA_S
+                             SS_ISDFACL
+                             SS_ISACL
+                             SS_ISDATAV
+                             SS_ISAIO
                             )],
+# SS_ISSTAGE_M SS_STAGE_M is missing
 	        flags => [ qw(
                              SS_STAGEFAIL
                              SS_STAGING
@@ -332,6 +482,82 @@ require AutoLoader;
                              DT_VIDEO_TAPE
                              DT_WORM_OPTICAL
                              DT_WORM_OPTICAL_12
+                             DT_STRIPE_GROUP_MASK
+                             DT_STRIPE_GROUP
+                             DT_STK5800
+                             DT_9490
+                             DT_D3
+                             DT_xx
+                             DT_3590
+                             DT_3570
+                             DT_SONYDTF
+                             DT_SONYAIT
+                             DT_9840
+                             DT_FUJITSU_128
+                             DT_EXABYTE_M2_TAPE
+                             DT_9940
+                             DT_IBM3580
+                             DT_SONYSAIT
+                             DT_3592
+                             DT_TITAN
+                             DT_PLASMON_UDO
+                             DT_LMS4500
+                             DT_CYGNET
+                             DT_DOCSTOR
+                             DT_HPLIBS
+                             DT_PLASMON_D
+                             DT_PLASMON_G
+                             DT_DLT2700
+                             DT_METRUM_LIB
+                             DT_METD28
+                             DT_METD360
+                             DT_ACL_LIB
+                             DT_ACL452
+                             DT_ACL2640
+                             DT_EXB210
+                             DT_ADIC448
+                             DT_SPECLOG
+                             DT_STK97XX
+                             DT_UNUSED1
+                             DT_3570C
+                             DT_SONYDMS
+                             DT_SONYCSM
+                             DT_UNUSED2
+                             DT_ATLP3000
+                             DT_ADIC1000
+                             DT_EXBX80
+                             DT_STKLXX
+                             DT_IBM3584
+                             DT_ADIC100
+                             DT_UNUSED3
+                             DT_HP_C7200
+                             DT_QUAL82xx
+                             DT_ATL1500
+                             DT_ODI_NEO
+                             DT_QUANTUMC4
+                             DT_GRAUACI
+                             DT_STKAPI
+                             DT_IBMATL
+                             DT_LMF
+                             DT_SONYPSC
+                             DT_PSEUDO
+                             DT_PSEUDO_SSI
+                             DT_PSEUDO_SC
+                             DT_PSEUDO_SS
+                             DT_PSEUDO_RD
+                             DT_HISTORIAN
+                             DT_THIRD_PARTY
+                             DT_THIRD_MASK
+                             DT_UNKNOWN
+                             is_disk
+                             is_optical
+                             is_robot
+                             is_tape
+                             is_tapelib
+                             is_third_party
+                             is_stripe_group
+                             is_rsd
+                             is_stk5800
                              DVST_ATTENTION
                              DVST_AUDIT
                              DVST_BAD_MEDIA
@@ -367,7 +593,7 @@ require AutoLoader;
                              CATALOG_SLOT_MAIL
                              CATALOG_SLOT_MEDIA
                              CSP_BAD_MEDIA
-                             CSP_BARCODE
+                             CSP_BAR_CODE
                              CSP_CLEANING
                              CSP_EXPORT
                              CSP_INUSE
@@ -379,7 +605,7 @@ require AutoLoader;
                              CSP_UNAVAIL
                              CSP_WRITEPROTECT
                              CS_BADMEDIA
-                             CS_BAR_CODE
+                             CS_BARCODE
                              CS_CLEANING
                              CS_EXPORT
                              CS_INUSE
@@ -392,113 +618,138 @@ require AutoLoader;
                              CS_WRTPROT
                              )],
 	        operations => [ qw(
-                             sam_archive 
+                             sam_archive
                              sam_cancelstage
-                             sam_release 
+                             sam_release
                              sam_ssum
-                             sam_stage 
+                             sam_stage
                              sam_setfa
                              sam_advise
                              )],
                              );
 
-$VERSION = '0.035';
+$VERSION = '0.1_01';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.  If a constant is not found then control is passed
-    # to the AUTOLOAD in AutoLoader.
+    # XS function.
 
     my $constname;
     ($constname = $AUTOLOAD) =~ s/.*:://;
-    croak "& not defined" if $constname eq 'constant';
-    my $val = constant($constname, @_ ? $_[0] : 0);
-    if ($! != 0) {
-	if ($! =~ /Invalid/) {
-	    $AutoLoader::AUTOLOAD = $AUTOLOAD;
-	    goto &AutoLoader::AUTOLOAD;
-	}
-	else {
-		croak "Your vendor has not defined SamFS macro $constname";
-	}
+    croak "&Filesys::SamFS::constant not defined" if $constname eq 'constant';
+    my ($error, $val) = constant($constname);
+    if ($error) { croak $error; }
+    {
+        no strict 'refs';
+        # Fixed between 5.005_53 and 5.005_61
+#XXX    if ($] >= 5.00561) {
+#XXX        *$AUTOLOAD = sub () { $val };
+#XXX    }
+#XXX    else {
+            *$AUTOLOAD = sub { $val };
+#XXX    }
     }
-    no strict 'refs';
-    *$AUTOLOAD = sub () { $val };
     goto &$AUTOLOAD;
 }
 
-bootstrap Filesys::SamFS $VERSION;
+require XSLoader;
+XSLoader::load('Filesys::SamFS', $VERSION);
 
 # Preloaded methods go here.
 
 # Autoload methods go after =cut, and are processed by the autosplit program.
+# Note that calling a sub without an argument list passes @_ implicitly.
 
 sub sam_stat {
-  Filesys::SamFS::stat(@_);
+  Filesys::SamFS::stat;
 }
 
 sub sam_lstat {
-  Filesys::SamFS::lstat(@_);
+  Filesys::SamFS::lstat;
+}
+
+sub sam_stat_scalars {
+  Filesys::SamFS::stat;
+}
+
+sub sam_lstat_scalars {
+  Filesys::SamFS::lstat;
 }
 
 sub sam_vsn_stat {
-  Filesys::SamFS::vsn_stat(@_);
+  Filesys::SamFS::vsn_stat;
+}
+
+sub sam_segment_stat {
+  Filesys::SamFS::sam_segment_stat;
+}
+
+sub sam_segment_lstat {
+  Filesys::SamFS::sam_segment_lstat;
+}
+
+sub sam_restore_file {
+  Filesys::SamFS::sam_restore_file;
+}
+
+sub sam_restore_copy {
+  Filesys::SamFS::sam_restore_copy;
 }
 
 sub sam_attrtoa {
-  Filesys::SamFS::attrtoa(@_);
+  Filesys::SamFS::attrtoa;
 }
 
 sub sam_devstat {
-  Filesys::SamFS::devstat(@_);
+  Filesys::SamFS::devstat;
 }
 
 sub sam_ndevstat {
-  Filesys::SamFS::ndevstat(@_);
+  Filesys::SamFS::ndevstat;
 }
 
 sub sam_devstr {
-  Filesys::SamFS::devstr(@_);
+  Filesys::SamFS::devstr;
 }
 
 sub sam_opencat {
-  Filesys::SamFS::opencat(@_);
+  Filesys::SamFS::opencat;
 }
 
 sub sam_closecat {
-  Filesys::SamFS::closecat(@_);
+  Filesys::SamFS::closecat;
 }
 
 sub sam_getcatalog {
-  Filesys::SamFS::getcatalog(@_);
+  Filesys::SamFS::getcatalog;
 }
 
 sub sam_archive {
-  Filesys::SamFS::archive(@_);
+  Filesys::SamFS::archive;
 }
 
 sub sam_cancelstage {
-  Filesys::SamFS::cancelstage(@_);
+  Filesys::SamFS::cancelstage;
 }
 
 sub sam_release {
-  Filesys::SamFS::release(@_);
+  Filesys::SamFS::release;
 }
 
 sub sam_ssum {
-  Filesys::SamFS::ssum(@_);
+  Filesys::SamFS::ssum;
 }
 
 sub sam_stage {
-  Filesys::SamFS::stage(@_);
+  Filesys::SamFS::stage;
 }
 
 sub sam_setfa {
-  Filesys::SamFS::setfa(@_);
+  Filesys::SamFS::setfa;
 }
 
 sub sam_advise {
-  Filesys::SamFS::advise(@_);
+  Filesys::SamFS::advise;
 }
 
 1;
@@ -519,16 +770,17 @@ HSM (Hierarchical Storage Management) Filesystem; it manages
 files in two storage levels - a cache on disks and an archive
 on removable media like magneto-optical disks or tapes.
 
-SamFS is a product of LSC, Inc. For more information, please
-refer to http://www.lsci.com/ .
+SamFS is a product of Sun Microsystems, Inc. For more information, please
+refer to
+  http://www.sun.com/storagetek/management_software/data_management/sam/
 
 =head1 Exported constants and functions
 
 Filesys::SamFS does not export by default.
 All constants and functions are available for explicit import
-(i.e. use "Filesys::SamFS (SAM_VERSION)").
+(i.e. use "Filesys::SamFS qw(SAM_VERSION)").
 They have also been bundled up in useful groups for import with tags
-(i.e. use "Filesys::SamFS (:version)").
+(i.e. use "Filesys::SamFS qw(:version)").
 
 The groups are the following:
 
@@ -541,6 +793,8 @@ NAME
 MAJORV
 MINORV
 FIXV
+SAM_BUILD_INFO
+SAM_BUILD_UNAME
 
 Note that VERSION is the I<module> version; the SamFS version is available
 as C<Filesys::SamFS::SAM_VERSION>.
@@ -548,8 +802,16 @@ as C<Filesys::SamFS::SAM_VERSION>.
 =item :stat
 
 sam_stat()
+sam_stat_scalars()
 sam_lstat()
+sam_lstat_scalars()
+sam_attrtoa()
 sam_vsn_stat()
+sam_segment_vsn_stat()
+sam_segment_stat()
+sam_segment_lstat()
+sam_restore_file()
+sam_restore_copy()
 MAX_ARCHIVE
 MAX_VSNS
 
@@ -575,6 +837,7 @@ S_ISGID(mode)
 S_ISREG(mode)
 S_ISUID(mode)
 S_ISLNK(mode)
+S_ISSOCK(mode)
 
 =item :attr
 
@@ -595,6 +858,21 @@ SS_RELEASE_N
 SS_RELEASE_P
 SS_STAGE_A
 SS_STAGE_N
+SS_DATA_V
+SS_AIO
+SS_SEGMENT_A
+SS_ARCHIVE_I
+SS_WORM
+SS_READONLY
+SS_SEGMENT_S
+SS_SEGMENT_F
+SS_SETFA_S
+SS_SETFA_G
+SS_DFACL
+SS_ACL
+SS_ARCHIVE_C
+SS_DIRECTIO
+SS_PARTIAL
 SS_ISSAMFS(attr)
 SS_ISREMEDIA(attr)
 SS_ISARCHIVED(attr)
@@ -612,12 +890,24 @@ SS_ISSTAGE_N(attr)
 SS_ISCSGEN(attr)
 SS_ISCSUSE(attr)
 SS_ISCSVAL(attr)
-SS_ARCHIVE_C,
-SS_DIRECTIO,
-SS_PARTIAL,
-SS_ISARCHIVE_C,
-SS_ISDIRECTIO,
-SS_ISPARTIAL,
+SS_ISARCHIVE_C(attr)
+SS_ISDIRECTIO(attr)
+SS_ISPARTIAL(attr)
+SS_ISARCHIVE_I(attr)
+SS_ISSEGMENT_A(attr)
+SS_ISSEGMENT_S(attr)
+SS_ISSEGMENT_F(attr)
+SS_ISWORM(attr)
+SS_ISREADONLY(attr)
+SS_ISSETFA_G(attr)
+SS_ISSETFA_S(attr)
+SS_ISDFACL(attr)
+SS_ISACL(attr)
+SS_ISDATAV(attr)
+SS_ISAIO(attr)
+
+Note that the include file defines SS_ISSTAGE_M, but the corresponding
+flag SS_STAGE_M is missing.
 
 =item :flags
 
@@ -667,6 +957,82 @@ DT_TAPE_SR
 DT_VIDEO_TAPE
 DT_WORM_OPTICAL
 DT_WORM_OPTICAL_12
+DT_STRIPE_GROUP_MASK
+DT_STRIPE_GROUP
+DT_STK5800
+DT_9490
+DT_D3
+DT_xx
+DT_3590
+DT_3570
+DT_SONYDTF
+DT_SONYAIT
+DT_9840
+DT_FUJITSU_128
+DT_EXABYTE_M2_TAPE
+DT_9940
+DT_IBM3580
+DT_SONYSAIT
+DT_3592
+DT_TITAN
+DT_PLASMON_UDO
+DT_LMS4500
+DT_CYGNET
+DT_DOCSTOR
+DT_HPLIBS
+DT_PLASMON_D
+DT_PLASMON_G
+DT_DLT2700
+DT_METRUM_LIB
+DT_METD28
+DT_METD360
+DT_ACL_LIB
+DT_ACL452
+DT_ACL2640
+DT_EXB210
+DT_ADIC448
+DT_SPECLOG
+DT_STK97XX
+DT_UNUSED1
+DT_3570C
+DT_SONYDMS
+DT_SONYCSM
+DT_UNUSED2
+DT_ATLP3000
+DT_ADIC1000
+DT_EXBX80
+DT_STKLXX
+DT_IBM3584
+DT_ADIC100
+DT_UNUSED3
+DT_HP_C7200
+DT_QUAL82xx
+DT_ATL1500
+DT_ODI_NEO
+DT_QUANTUMC4
+DT_GRAUACI
+DT_STKAPI
+DT_IBMATL
+DT_LMF
+DT_SONYPSC
+DT_PSEUDO
+DT_PSEUDO_SSI
+DT_PSEUDO_SC
+DT_PSEUDO_SS
+DT_PSEUDO_RD
+DT_HISTORIAN
+DT_THIRD_PARTY
+DT_THIRD_MASK
+DT_UNKNOWN
+is_disk
+is_optical
+is_robot
+is_tape
+is_tapelib
+is_third_party
+is_stripe_group
+is_rsd
+is_stk5800
 DVST_ATTENTION
 DVST_AUDIT
 DVST_BAD_MEDIA
@@ -729,11 +1095,11 @@ CS_WRTPROT(status)
 
 =item :operations
 
-sam_archive 
+sam_archive
 sam_cancelstage
-sam_release 
+sam_release
 sam_ssum
-sam_stage 
+sam_stage
 sam_setfa
 sam_advise
 
@@ -741,19 +1107,21 @@ sam_advise
 
 =head1 Interface
 
-The following paragraphs describe the interface from the Perl viewpoint
-and emphasize differences from the C API.
-For a description of the commonalities, please refer to thge
-SamFS API manpages.
+The following paragraphs describe the interface from the Perl
+viewpoint and emphasize differences from the C API.  For a description
+of the commonalities, please refer to the SamFS API manpages.
 
 =head2 stat and lstat
 
-B<Filesys::SamFS::stat($path)> (importable as sam_stat) returns a list, much like
-the standard Perl function stat.
-The first 13 elements are the same as for stat.
-Since blksize and blocks are not returned by the sam_stat function in
-the SamFS API, these elements are always returned as B<undef>.
-The additional elements are specific to SamFS filesystems.
+B<Filesys::SamFS::stat($path)> (importable as sam_stat) returns a
+list, much like the standard Perl function stat.
+
+The first 13 elements are the same as for stat, while the additional
+elements are specific to SamFS filesystems. The element "blocks" is
+not returned by the sam_stat function in older versions of the SamFS
+API and the element "blksize" is never returned (a block size of 512
+is assumed). If the code is compiled with OLD_SAMFS defined, these
+elements are always returned as B<undef>.
 
 Example usage:
 
@@ -791,6 +1159,39 @@ but blksize and blocks are still returned as B<undef>.
 (This is so because the SamFS API function sam_stat()/sam_lstat()
 just do not provide these elements.)
 
+=head2 stat_scalars and lstat_scalars
+
+These are variants of stat and lstat that try to solve the problem of
+a struct definition acquiring more fields over time. The first 13
+elements are again the same as for stat and lstat in Perl. The array
+@copyref is returned by reference as the fourteenth element, and newer
+fields are added after that. The usage is:
+
+C<($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
+$atime,$mtime,$ctime,undef,undef,
+# So far, much like Perl stat()
+$attr,$attribute_time,$creation_time,$residence_time,
+$cs_algo,$flags,$gen,$partial_size,
+# So far, just like Filesys::SamFS::stat()
+$copyref,
+# New fields
+$stripe_width,$stripe_group,$segment_size,$segment_number,
+$stage_ahead,$admin_id,$allocahead)
+           = Filesys::SamFS::stat_scalars($path);>
+
+Again, lstat_scalars is stat_scalars with the same difference as stat
+vs. lstat.
+
+=head2 segment_stat
+
+B<Filesys::SamFS::segment_stat($path)> (importable as
+sam_segment_stat) returns a list of arrays, each like the list
+returned by stat_scalars, one array per segment of the file. Note that
+a list with just one array is returned for an unsegmented file.
+
+There is also the lstat variant of this function, segment_lstat
+(importable as sam_lstat).
+
 =head2 vsn_stat
 
 B<Filesys::SamFS::vsn_stat($path, $copy)> (importable as sam_vsn_stat)
@@ -800,6 +1201,33 @@ All of them are strings.
 
 B<Filesys::SamFS::vsn_stat($path, $copy)> returns an empty list on error.
 $! is set in this case.
+
+=head2 segment_vsn_stat
+
+B<Filesys::SamFS::segment_vsn_stat($path, $copy, $segment_index)>
+(importable as sam_segment_vsn_stat) is the equivalent of vsn_stat for
+segmented files. In addition to a copy number, it requires a segment
+number. It returns the same list as vsn_stat.
+
+=head2 restore_file
+
+B<Filesys::SamFS::restore_file($path, $st_mode, $st_uid, $st_gid,
+$st_size, $st_atime, $st_ctime, $st_mtime, $copies)>
+(importable as sam_restore_file) creates an offline file.
+You must supply it with a number of attributes for the file.
+$copies is a reference to an array containing MAX_ARCHIVE sub-arrays.
+Each of those arrays must contain four elements media, position,
+creation_time and vsn.
+
+=head2 restore_copy
+
+B<Filesys::SamFS::restore_copy($path, $copy_no, $st_mode, $st_uid, $st_gid,
+$st_size, $st_atime, $st_ctime, $st_mtime, $copies, $sections)>
+(importable as sam_restore_copy) creates archive copy for an existing
+file. $sections is optional and only required for a segmented file.
+It is a reference to an array containing sub-arrays, one for each
+section. The sections have the elements vsn, length, position
+and offset.
 
 =head2 attrtoa
 
@@ -881,9 +1309,13 @@ Please refer to sam_advise(3) for details.
 
 =head1 Unimplemented functions
 
+sam_request
+
+Not yet implemented. I don't really understand what it does.
+
 sam_readrminfo
 
-sam_request
+sam_segment
 
 Both of these are not documented in the manpages, and the header
 file does not provide enough information.

@@ -13,3 +13,4 @@ t/01version.t
 t/02stat.t
 t/03ndevstat.t
 t/04catalog.t
+META.yml                                 Module meta-data (added by MakeMaker)
