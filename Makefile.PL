@@ -3,6 +3,8 @@ use ExtUtils::MakeMaker;
 # Gather some variables for tests.
 $| = 1;
 
+$catalog = '/etc/fs/samfs/sam_historian';
+# This keeps the variables $dir, $eq, and $catalog from a previous run.
 eval { require 't/vars.pl'; };
 
 print <<'EOF';
@@ -29,89 +31,52 @@ installation when you do the 'make install'.
 
 EOF
 
-$SamFS_dir = '/opt/SUNWsamfs';
+$SamFS_dir = prompt("Where is SamFS located:", '/opt/SUNWsamfs');
+unless (-d $SamFS_dir && -d "$SamFS_dir/include" && -d "$SamFS_dir/lib") {
+    print "Sorry, you must specify the SamFS location.\n";
+    exit 0;
+}
 
-do {{
-  print "Where is SamFS located [$SamFS_dir]: ";
-  $answer = <STDIN>;
-  chomp $answer;
-  $answer = $SamFS_dir unless length($answer);
-  unless (-d $answer) {
-    print "Sorry, but $answer is not a directory. Please try again.\n";
-    next;
-  }
-  unless (-d "$answer/include") {
-    print "Sorry, but $answer/include does not exist. Please try again.\n";
-    next;
-  }
-  unless (-d "$answer/lib") {
-    print "Sorry, but $answer/lib does not exist. Please try again.\n";
-    next;
-  }
-}} until (-d $answer && -d "$answer/include" && -d "$answer/lib");
-$SamFS_dir = $answer;
-
-print "\n";
-
-do {{
-  print "A directory in a SamFS filesystem writable by this user [$dir]: ";
-  $answer = <STDIN>;
-  chomp $answer;
-  $answer = $dir unless length($answer);
-  unless (length($answer)) {
+$dir = prompt("A directory in a SamFS filesystem writable by this user:",
+              $dir);
+unless (length($dir)) {
     print "Sorry, but you have to provide an answer. There is no default.\n";
-    next;
-  }
-  unless (-d $answer) {
-    print "Sorry, but $answer is not a directory. Please try again.\n";
-    next;
-  }
-  unless (-w _) {
-    print "Sorry, but $answer is not writeable by you. Please try again.\n";
-    next;
-  }
-}} until (-d _ && -w _);
-$dir = $answer;
+    exit 0;
+}
+unless (-d $dir) {
+    print "Sorry, but $dir is not a directory.\n";
+    exit 0;
+}
+unless (-w _) {
+    print "Sorry, but $dir is not writeable by you.\n";
+    exit 0;
+}
 
-print "\n";
-
-do {{
-  print "The equipment ordinal of a tape drive or MO drive [$eq]: ";
-  $answer = <STDIN>;
-  chomp $answer;
-  $answer = $eq unless length($answer);
-  unless (length($answer)) {
+$eq = prompt("The equipment ordinal of a tape drive or MO drive:",
+             $eq);
+unless (length($eq)) {
     print "Sorry, but you have to provide an answer. There is no default.\n";
-    next;
-  }
-  unless ($answer =~ /^\d+$/) {
-    print "Sorry, but the answer must be numeric. Please try again.\n";
-    next;
-  }
-}} until ($answer =~ /^\d+$/);
-print "\n";
-$eq = $answer;
+    exit 0;
+}
+unless ($eq =~ /^\d+$/) {
+    print "Sorry, but the answer must be numeric.\n";
+    exit 0;
+}
 
-$catalog = '/etc/fs/samfs/sam_historian' unless defined $catalog;
-do {{
-  print "The location of a catalog file [$catalog]: ";
-  $answer = <STDIN>;
-  chomp $answer;
-  $answer = $catalog unless length($answer);
-  unless (-e $answer) {
-    print "Sorry, but $answer does not exist. Please try again.\n";
-    next;
-  }
-  unless (-f _) {
-    print "Sorry, but $answer is not a file. Please try again.\n";
-    next;
-  }
-  unless (-r _) {
-    print "Sorry, but $answer is not readable by you. Please try again.\n";
-    next;
-  }
-}} until (-e _ && -f _) && -r _;
-$catalog = $answer;
+$catalog = prompt("The location of a catalog file:",
+                  $catalog);
+unless (-e $catalog) {
+    print "Sorry, but $catalog does not exist.\n";
+    exit 0;
+}
+unless (-f _) {
+    print "Sorry, but $catalog is not a file.\n";
+    exit 0;
+}
+unless (-r _) {
+    print "Sorry, but $catalog is not readable by you.\n";
+    exit 0;
+}
 
 open (VARS, '>t/vars.pl') || die "Can't open t/vars.pl for writing: $!\n";
 print VARS <<"EOF";

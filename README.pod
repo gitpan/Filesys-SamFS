@@ -95,7 +95,7 @@ You can do this with this command:
 =head2 Webpage
 
 =for html
-Filesys::SamFS has it's own <A HREF="http://www.lupe-christoph.de/Personal/Perl/Filesys-SamFS/">webpage</A>.
+Filesys::SamFS has its own <A HREF="http://www.lupe-christoph.de/Personal/Perl/Filesys-SamFS/">webpage</A>.
 
 =begin text
 

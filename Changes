@@ -1,5 +1,5 @@
 Revision history for Perl extension Filesys::SamFS.
-    * 0.1 2008-01-14 13:21
+    * 0.1_01 2008-01-14 13:21
         Regenerated code for constants with recent h2xs to make it more
         efficient. All new constants in supports include files added. Added
         new macros as well. sam_stat now returns the number of blocks and a

@@ -46,7 +46,7 @@ Filesys::SamFS
             make install
 
     If you run into problems because you older SamFS does not define some of
-    the new feature, try running
+    the new features, try running
 
             perl Makefile.PL -DOLD_SAMFS
 
