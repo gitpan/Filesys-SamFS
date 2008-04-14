@@ -2,6 +2,18 @@
 
 =over
 
+=item * 0.101 2008-04-14 10:34
+
+Changed the licensing to the Artistic License 2.0.
+Added Artistic-2.0, const-c.inc, and const-xs.inc to MANIFEST.
+
+=item * 0.1 2008-03-30 14:19
+
+Changed Makefile.PL so that it can run non-interactively.
+
+=for html
+<P></P>
+
 =item * 0.1_01 2008-01-14 13:21
 
 Regenerated code for constants with recent h2xs to make it

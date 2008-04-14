@@ -18,8 +18,8 @@ Copyright (c) 2000,2001,2008 Lupe Christoph. All rights reserved.
 
 =head2 License
 
-This software is covered by Perl's Artistic license, see the
-file Artistic included in the distribution.
+This software is covered by the Artistic license 2.0, see the
+file Artistic-2.0 included in the distribution.
 
 =head2 Download
 
